@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewLog</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>BrewLog</h1>
+        
+        <!-- Brew Form -->
+        <div class="brew-form">
+            <h2>New Brew</h2>
+            
+            <!-- Pre-Brew Specs -->
+            <div class="form-section">
+                <h3>Setup</h3>
+                <div class="form-group">
+                    <label for="grindSize">Grind Size (1-20):</label>
+                    <input type="range" id="grindSize" min="1" max="20" value="10" step="1">
+                    <span id="grindSizeValue">10</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="coffeeSelect">Coffee:</label>
+                    <div class="coffee-select-container">
+                        <select id="coffeeSelect">
+                            <!-- Coffee options will be loaded dynamically -->
+                        </select>
+                        <button type="button" id="addCoffeeBtn">+</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="doseWeight">Dose Weight (g):</label>
+                    <input type="number" id="doseWeight" min="1" max="30" value="18" step="0.1">
+                </div>
+            </div>
+            
+            <!-- Post-Brew Results -->
+            <div class="form-section">
+                <h3>Results</h3>
+                <div class="form-group">
+                    <label for="brewTime">Brew Time (seconds):</label>
+                    <input type="number" id="brewTime" min="1" max="120" value="25" step="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="finalWeight">Final Weight (g):</label>
+                    <input type="number" id="finalWeight" min="1" max="100" value="36" step="0.1">
+                </div>
+                
+                <div class="form-group">
+                    <label>Rating:</label>
+                    <div class="rating">
+                        <span class="star" data-value="1">☆</span>
+                        <span class="star" data-value="2">☆</span>
+                        <span class="star" data-value="3">☆</span>
+                        <span class="star" data-value="4">☆</span>
+                        <span class="star" data-value="5">☆</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="notes">Notes:</label>
+                <textarea id="notes" rows="3"></textarea>
+            </div>
+            
+            <button id="saveBrew">Save Brew</button>
+        </div>
+        
+        <!-- Brew History -->
+        <div class="brew-history">
+            <h2>Brew History</h2>
+            <div id="brewList"></div>
+        </div>
+    </div>
+    
+    <!-- Add Coffee Modal -->
+    <div class="coffee-modal" id="coffeeModal">
+        <div class="coffee-modal-content">
+            <h3 class="coffee-modal-title">Add New Coffee</h3>
+            <div class="form-group">
+                <label for="newCoffeeName">Coffee Name:</label>
+                <input type="text" id="newCoffeeName" placeholder="e.g., Ethiopia Yirgacheffe">
+            </div>
+            <div class="form-group">
+                <label for="newCoffeeRoaster">Roaster (optional):</label>
+                <input type="text" id="newCoffeeRoaster" placeholder="e.g., Stumptown">
+            </div>
+            <div class="coffee-modal-buttons">
+                <button id="cancelAddCoffee">Cancel</button>
+                <button id="saveNewCoffee">Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="BrewLog/js/app.js"></script>
+</body>
+</html>
