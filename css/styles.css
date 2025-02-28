@@ -105,6 +105,31 @@ button:hover {
     margin-top: 40px;
 }
 
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-controls label {
+    margin-bottom: 0;
+    font-size: 0.9em;
+}
+
+.sort-controls select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+}
+
 .brew-card {
     border: 1px solid #ddd;
     border-radius: 5px;

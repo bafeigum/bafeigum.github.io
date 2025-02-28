@@ -74,7 +74,17 @@
         
         <!-- Brew History -->
         <div class="brew-history">
-            <h2>Brew History</h2>
+            <div class="history-header">
+                <h2>Brew History</h2>
+                <div class="sort-controls">
+                    <label for="sortBy">Sort by:</label>
+                    <select id="sortBy">
+                        <option value="date">Most Recent</option>
+                        <option value="rating">Rating (High to Low)</option>
+                        <option value="coffee">Coffee Name</option>
+                    </select>
+                </div>
+            </div>
             <div id="brewList"></div>
         </div>
     </div>

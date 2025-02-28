@@ -10,6 +10,7 @@ const starsEl = document.querySelectorAll('.star');
 const notesEl = document.getElementById('notes');
 const saveBrewBtn = document.getElementById('saveBrew');
 const brewListEl = document.getElementById('brewList');
+const sortByEl = document.getElementById('sortBy');
 
 // Modal Elements
 const coffeeModal = document.getElementById('coffeeModal');
@@ -51,6 +52,11 @@ saveBrewBtn.addEventListener('click', saveBrew);
 addCoffeeBtn.addEventListener('click', showAddCoffeeModal);
 cancelAddCoffeeBtn.addEventListener('click', hideAddCoffeeModal);
 saveNewCoffeeBtn.addEventListener('click', addNewCoffee);
+
+// Sorting Events
+sortByEl.addEventListener('change', () => {
+    sortBrews(sortByEl.value);
+});
 
 // Functions
 function setRating(rating) {
@@ -108,15 +114,37 @@ function resetForm() {
     setRating(0);
 }
 
-function renderBrewList() {
+function sortBrews(sortType) {
+    const sortedBrews = [...brews];
+    
+    switch (sortType) {
+        case 'date':
+            // Already sorted by date (most recent first)
+            break;
+        case 'rating':
+            sortedBrews.sort((a, b) => b.rating - a.rating);
+            break;
+        case 'coffee':
+            sortedBrews.sort((a, b) => {
+                const coffeeNameA = a.coffee ? a.coffee.name.toLowerCase() : 'z';
+                const coffeeNameB = b.coffee ? b.coffee.name.toLowerCase() : 'z';
+                return coffeeNameA.localeCompare(coffeeNameB);
+            });
+            break;
+    }
+    
+    renderBrewList(sortedBrews);
+}
+
+function renderBrewList(brewsToRender = brews) {
     brewListEl.innerHTML = '';
     
-    if (brews.length === 0) {
+    if (brewsToRender.length === 0) {
         brewListEl.innerHTML = '<p>No brews saved yet.</p>';
         return;
     }
     
-    brews.forEach(brew => {
+    brewsToRender.forEach(brew => {
         const brewCard = document.createElement('div');
         brewCard.classList.add('brew-card');
         
@@ -155,7 +183,13 @@ function renderBrewList() {
 function deleteBrew(id) {
     brews = brews.filter(brew => brew.id !== id);
     localStorage.setItem('brews', JSON.stringify(brews));
-    renderBrewList();
+    
+    // Apply current sort when re-rendering
+    if (sortByEl.value !== 'date') {
+        sortBrews(sortByEl.value);
+    } else {
+        renderBrewList();
+    }
 }
 
 // Coffee Modal Functions
