@@ -9,6 +9,8 @@ const finalWeightEl = document.getElementById('finalWeight');
 const starsEl = document.querySelectorAll('.star');
 const notesEl = document.getElementById('notes');
 const saveBrewBtn = document.getElementById('saveBrew');
+const clearEverythingBtn = document.getElementById('clearEverything');
+const clearHistoryBtn = document.getElementById('clearHistory');
 const brewListEl = document.getElementById('brewList');
 const sortByEl = document.getElementById('sortBy');
 
@@ -24,14 +26,19 @@ let currentRating = 0;
 let brews = JSON.parse(localStorage.getItem('brews') || '[]');
 let coffees = JSON.parse(localStorage.getItem('coffees') || '[]');
 
-// Initialize with default coffees if none exist
-if (coffees.length === 0) {
+// Add default coffees function
+function addDefaultCoffees() {
     coffees = [
         { id: 1, name: 'Ethiopia Yirgacheffe', roaster: 'Stumptown' },
         { id: 2, name: 'Colombia Huila', roaster: 'Counter Culture' },
         { id: 3, name: 'Brazil Cerrado', roaster: 'Blue Bottle' }
     ];
     localStorage.setItem('coffees', JSON.stringify(coffees));
+}
+
+// Initialize with default coffees if none exist
+if (coffees.length === 0) {
+    addDefaultCoffees();
 }
 
 // Event Listeners
@@ -47,6 +54,8 @@ starsEl.forEach(star => {
 });
 
 saveBrewBtn.addEventListener('click', saveBrew);
+clearHistoryBtn.addEventListener('click', clearHistory);
+clearEverythingBtn.addEventListener('click', clearEverything);
 
 // Coffee Modal Events
 addCoffeeBtn.addEventListener('click', showAddCoffeeModal);
@@ -96,6 +105,38 @@ function saveBrew() {
     localStorage.setItem('brews', JSON.stringify(brews));
     
     resetForm();
+    renderBrewList();
+}
+
+// Clear brew history
+function clearHistory() {
+    // Ask for confirmation
+    //if (!confirm('Are you sure you want to remove all brews?')) {
+    //    return;
+    //}
+
+    localStorage.removeItem('brews');
+    brews = [];
+    
+    renderBrewList();
+}
+
+// Clear everything
+function clearEverything() {
+    // Ask for confirmation
+    if (!confirm('Are you sure you want to clear all data? This will remove all brews and custom coffees.')) {
+        return;
+    }
+    
+    localStorage.clear();
+    brews = [];
+    coffees = [];
+    
+    // Reset to default coffees
+    addDefaultCoffees();
+
+    resetForm();
+    populateCoffeeSelect();
     renderBrewList();
 }
 

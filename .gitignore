@@ -1,1 +1,3 @@
 *.bak
+.vscode/
+node_modules/
